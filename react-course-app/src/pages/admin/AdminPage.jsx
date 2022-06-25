@@ -3,12 +3,14 @@ import CourseService from '../../services/course.service';
 import { CourseSave } from '../../components/CourseSave';
 import Course from '../../models/course';
 import { CourseDelete } from '../../components/CourseDelete';
-
+import { Alert } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 const AdminPage = () => {
 
     const [courseList, setCourseList] = useState([]);
-    const [selectedCourse, setSelectedCourse] = useState(new Course('', '', 0));
+    const [selectedCourse, setSelectedCourse] = useState(new Course('', '', 0.0));
     const [errorMessage, setErrorMessage] = useState('');
 
     const saveComponent = useRef();
@@ -17,7 +19,7 @@ const AdminPage = () => {
     useEffect(() => {
         CourseService.getAllCourses().then((response) => {
             setCourseList(response.data);
-        });
+        }).catch(err => setErrorMessage("No data available"));
     }, []);
 
     const createCourseRequest = () => {
@@ -26,13 +28,13 @@ const AdminPage = () => {
     };
 
     const editCourseRequest = (item) => {
-      setSelectedCourse(Object.assign({}, item));
+        setSelectedCourse(Object.assign({}, item));
         saveComponent.current?.showCourseModal();
     };
 
     const deleteCourseRequest = (course) => {
         setSelectedCourse(course);
-      deleteComponent.current?.showDeleteModal();
+        deleteComponent.current?.showDeleteModal();
     };
 
     const saveCourseWatcher = (course) => {
@@ -49,6 +51,7 @@ const AdminPage = () => {
         } else {
             const newList = courseList.concat(course);
             setCourseList(newList);
+            window.location.reload();
         }
     };
 
@@ -63,14 +66,18 @@ const AdminPage = () => {
 
     return (
         <div>
-            <div className="container">
-                <div className="pt-5">
+            <div>
+                <div className="container">
+                    <div className="pt-5">
 
-                    {errorMessage &&
-                    <div className="alert alert-danger">
-                        {errorMessage}
+                        {errorMessage ?
+                            <Alert className="alert alert-danger">
+                                <FontAwesomeIcon icon={faExclamationTriangle} />
+                                {errorMessage}
+                            </Alert> : null
+
+                        }
                     </div>
-                    }
 
                     <div className="card">
                         <div className="card-header">
@@ -90,32 +97,32 @@ const AdminPage = () => {
                             <table className="table table-striped">
 
                                 <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Action</th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
 
-                                {courseList.map((item, ind) =>
-                                    <tr key={item.id}>
-                                        <th scope="row">{ind + 1}</th>
-                                        <td>{item.title}</td>
-                                        <td>{`$ ${item.price}`}</td>
-                                        <td>{new Date(item.createTime).toLocaleDateString()}</td>
-                                        <td>
-                                            <button className="btn btn-primary me-1" onClick={() => editCourseRequest(item)}>
-                                                Edit
-                                            </button>
-                                            <button className="btn btn-danger" onClick={() => deleteCourseRequest(item)}>
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-                                )}
+                                    {courseList.map((item, ind) =>
+                                        <tr key={item.id}>
+                                            <th scope="row">{ind + 1}</th>
+                                            <td>{item.title}</td>
+                                            <td>{`$ ${item.price}`}</td>
+                                            <td>{new Date(item.createTime).toLocaleDateString()}</td>
+                                            <td>
+                                                <button className="btn btn-primary me-1" onClick={() => editCourseRequest(item)}>
+                                                    Edit
+                                                </button>
+                                                <button className="btn btn-danger" onClick={() => deleteCourseRequest(item)}>
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )}
 
                                 </tbody>
 
@@ -131,4 +138,4 @@ const AdminPage = () => {
     );
 };
 
-export {AdminPage};
+export { AdminPage };

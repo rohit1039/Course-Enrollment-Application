@@ -6,9 +6,8 @@ import AuthenticationService from '../../services/authentication.service';
 import './RegisterPage.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Alert } from 'react-bootstrap';
-
-
 
 const RegisterPage = () => {
 
@@ -26,7 +25,7 @@ const RegisterPage = () => {
         if (currentUser?.id) {
             navigate('/profile');
         }
-    }, []);
+    }, [currentUser?.id,navigate]);
 
     //<input onChange=(event => handleChange(event))>
     const handleChange = (e) => {
@@ -43,7 +42,7 @@ const RegisterPage = () => {
 
     const handleRegister = (e) => {
 
-        e.preventDefault();
+     e.preventDefault();
 
       setSubmitted(true);
 
@@ -69,13 +68,13 @@ const RegisterPage = () => {
 
     return (
         <div className="container mt-3">
-            <div className="card ms-auto me-auto p-3 shadow-lg custom-card">
+            <div className="card ms-auto me-auto p-2 shadow-lg custom-card">
 
-                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
-                <FontAwesomeIcon icon={ faUserCircle} className="ms-auto me-auto user-icon p-2"/>
+                <p className="text-center h1 fw-bold mb-3 mx-1 mx-md-4 mt-4">Sign up</p>
+                <FontAwesomeIcon icon={ faUserCircle} className="ms-auto me-auto user-icon p-3"/>
                 <div>
                     {errorMessage ?
-                        <Alert className="alert alert-danger text-center"> {errorMessage}
+                        <Alert className="alert alert-danger text-center"> <FontAwesomeIcon icon={faExclamationTriangle} /> {errorMessage}
                         </Alert> : null}
                 </div>
 
@@ -86,7 +85,7 @@ const RegisterPage = () => {
                     className={submitted ? 'was-validated' : ''}
                 >
                     <div className="form-group p-2">
-                        <label htmlFor="name">Fullname: </label>
+                        <label htmlFor="fullname">Fullname: </label>
                         <input
                             type="text"
                             className="form-control"

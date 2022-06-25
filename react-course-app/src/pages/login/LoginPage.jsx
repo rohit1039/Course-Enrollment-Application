@@ -5,8 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthenticationService from '../../services/authentication.service';
 import { setCurrentUser } from '../../store/actions/user';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import '../register/RegisterPage.css';
+import { Alert } from 'react-bootstrap';
+import { toast} from 'react-toastify'
 
 
 const LoginPage = () => {
@@ -27,7 +30,7 @@ const LoginPage = () => {
         if (currentUser?.id) {
             navigate('/profile');
         }
-    }, []);
+    }, [currentUser?.id,navigate]);
 
     //<input onChange=(event => handleChange(event))>
     const handleChange = (e) => {
@@ -53,7 +56,10 @@ const LoginPage = () => {
 
       setLoading(true);
 
-      AuthenticationService.login(user).then(response => {
+        AuthenticationService.login(user).then(response => {
+            toast.success(<i>Login success</i>, {
+                position:"bottom-left"
+            });
           //set user in session.
           dispatch(setCurrentUser(response.data));
           navigate('/profile');
@@ -65,23 +71,24 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="container mt-5">
-            <div className="card ms-auto me-auto p-3 shadow-lg custom-card">
+        <div className="container mt-3">
+            <div className="card ms-auto me-auto shadow-lg p-2 custom-card">
 
-                <FontAwesomeIcon icon={faUserCircle} className="ms-auto me-auto user-icon"/>
+                <p className="text-center h1 fw-bold mb-3 mx-1 mx-md-4 mt-4">Sign In</p>
+                <FontAwesomeIcon icon={ faSignInAlt} className="ms-auto me-auto user-icon p-3"/>
 
-                {errorMessage &&
-                <div className="alert alert-danger">
-                    {errorMessage}
+                <div>
+                    {errorMessage ?
+                        <Alert className="alert alert-danger text-center"> <FontAwesomeIcon icon={faTimesCircle} /> {errorMessage}
+                        </Alert> : null}
                 </div>
-                }
 
                 <form
                     onSubmit={(e) => handleLogin(e)}
                     noValidate
                     className={submitted ? 'was-validated' : ''}
                 >
-                    <div className="form-group">
+                    <div className="form-group p-2">
                         <label htmlFor="username">Username: </label>
                         <input
                             type="text"
@@ -97,7 +104,7 @@ const LoginPage = () => {
                         </div>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group p-2">
                         <label htmlFor="password">Password: </label>
                         <input
                             type="password"
@@ -116,12 +123,12 @@ const LoginPage = () => {
                     <button
                         className="btn btn-info w-100 mt-3"
                         disabled={loading}>
-                        Sign In
+                        Login
                     </button>
 
                 </form>
 
-                <Link to="/register" className="btn btn-link" style={{color: 'darkgray'}}>
+                <Link to="/register" className="btn btn-link" style={{color: 'grey'}}>
                     Create New Account!
                 </Link>
 

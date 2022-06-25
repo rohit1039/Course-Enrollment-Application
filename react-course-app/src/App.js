@@ -10,34 +10,36 @@ import { NotFoundPage } from './pages/not-found/NotFoundPage';
 import { UnauthorizedPage } from './pages/unauthorized/UnauthorizedPage';
 import { AuthGuard } from './guards/AuthGuard';
 import { Role } from './models/role';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 function App() {
     return (
         <BrowserRouter>
-            <NavBar/>
+            <NavBar />
             <div className="container">
+                <ToastContainer/>
                 <Routes>
-                    <Route path="/" element={<HomePage/>}/>
-                    <Route path="/home" element={<HomePage/>}/>
-                    <Route path="/login" element={<LoginPage/>}/>
-                    <Route path="/register" element={<RegisterPage/>}/>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
 
                     <Route path="/profile"
-                           element={
-                               <AuthGuard roles={[Role.ADMIN, Role.USER]}>
-                                   <ProfilePage/>
-                               </AuthGuard>
-                           }/>
+                        element={
+                            <AuthGuard roles={[Role.ADMIN, Role.USER]}>
+                                <ProfilePage />
+                            </AuthGuard>
+                        } />
 
                     <Route path="/admin"
-                           element={<AuthGuard roles={[Role.ADMIN]}>
-                               <AdminPage/>
-                           </AuthGuard>}/>
+                        element={<AuthGuard roles={[Role.ADMIN]}>
+                            <AdminPage />
+                        </AuthGuard>} />
 
-                    <Route path="/404" element={<NotFoundPage/>}/>
-                    <Route path="/401" element={<UnauthorizedPage/>}/>
-                    <Route path="*" element={<NotFoundPage/>}/>
+                    <Route path="/404" element={<NotFoundPage />} />
+                    <Route path="/401" element={<UnauthorizedPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </div>
         </BrowserRouter>

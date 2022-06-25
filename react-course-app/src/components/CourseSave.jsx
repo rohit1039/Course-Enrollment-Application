@@ -1,8 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import Course from '../models/course';
 import CourseService from '../services/course.service';
-import { Modal } from 'react-bootstrap';
-
+import { Alert, Modal } from 'react-bootstrap';
 
 const CourseSave = forwardRef((props, ref) => {
 
@@ -30,7 +29,7 @@ const CourseSave = forwardRef((props, ref) => {
 
         setSubmitted(true);
 
-        if(!course.title || !course.subtitle || !course.price) {
+        if (!course.title || !course.subtitle || !course.price) {
             return;
         }
 
@@ -47,7 +46,7 @@ const CourseSave = forwardRef((props, ref) => {
 
     //<input name="" onChange=(evvent) => handlechange(event)>
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         setCourse((prevState => {
             return {
@@ -60,8 +59,8 @@ const CourseSave = forwardRef((props, ref) => {
     return (
         <Modal show={show}>
             <form onSubmit={(e) => saveCourse(e)}
-            noValidate
-            className={submitted ? 'was-validated' : ''}>
+                noValidate
+                className={submitted ? 'was-validated' : ''}>
 
                 <div className="modal-header">
                     <h5 className="modal-title">Course Details</h5>
@@ -70,13 +69,13 @@ const CourseSave = forwardRef((props, ref) => {
 
                 <div className="modal-body">
 
-                    {errorMessage &&
-                    <div className="alert alert-danger">
-                        {errorMessage}
-                    </div>
+                    {errorMessage ?
+                        <Alert className="alert alert-danger">
+                            {errorMessage}
+                        </Alert> : null
                     }
 
-                    <div className="form-group">
+                    <div className="form-group p-2">
                         <label htmlFor="title">Title: </label>
                         <input
                             type="text"
@@ -92,7 +91,7 @@ const CourseSave = forwardRef((props, ref) => {
                         </div>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group p-2">
                         <label htmlFor="subtitle">Subtitle: </label>
                         <input
                             type="text"
@@ -108,7 +107,7 @@ const CourseSave = forwardRef((props, ref) => {
                         </div>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group p-2">
                         <label htmlFor="price">Price: </label>
                         <input
                             type="number"
@@ -138,4 +137,4 @@ const CourseSave = forwardRef((props, ref) => {
     );
 });
 
-export {CourseSave};
+export { CourseSave };

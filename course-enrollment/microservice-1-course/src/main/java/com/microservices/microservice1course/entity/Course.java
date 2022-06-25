@@ -34,8 +34,8 @@ public class Course
     @NotNull(message = "Price cannot be null")
     private Double price;
 
-    @Column(name = "created_time", nullable = false)
-    private LocalDateTime createdTime;
+    @Column(name = "create_time", nullable = false)
+    private LocalDateTime createTime;
 
     @Override
     public boolean equals(Object o)

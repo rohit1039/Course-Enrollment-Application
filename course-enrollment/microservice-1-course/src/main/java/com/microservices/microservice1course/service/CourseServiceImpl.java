@@ -17,7 +17,7 @@ public class CourseServiceImpl implements CourseService
     @Override
     public Course saveCourse(Course course)
     {
-        course.setCreatedTime(LocalDateTime.now());
+        course.setCreateTime(LocalDateTime.now());
         return courseRepository.save(course);
     }
 

@@ -19,30 +19,33 @@ const ProfilePage = () => {
     useEffect(() => {
         PurchaseService.getAllPurchaseItems().then((response) => {
             setPurchaseList(response.data);
-        });
+        }).catch(err => setErrorMessage("No purchase found, please purchase a course!"));
     }, []);
 
     const changeRole = () => {
-      const newRole = currentUser.role === Role.ADMIN ? Role.USER : Role.ADMIN;
+        const newRole = currentUser.role === Role.ADMIN ? Role.USER : Role.ADMIN;
 
-      UserService.changeRole(newRole).then(() => {
-          //clear session
-          dispatch(clearCurrentUser());
-          navigate('/login');
-      }).catch((err) => {
-          setErrorMessage('Unexpected error occurred.');
-          console.log(err);
-      });
+        UserService.changeRole(newRole).then(() => {
+            //clear session
+            dispatch(clearCurrentUser());
+            navigate('/login');
+        }).catch((err) => {
+            setErrorMessage('Unexpected error occurred.');
+            console.log(err);
+        });
     };
 
     return (
         <div className="container">
+            <br/>
+            {currentUser &&
+                <span style={{ color: 'blue' }}>Welcome, <b>{currentUser.fullname}</b></span>
+            }
             <div className="pt-5">
-
                 {errorMessage &&
-                <div className="alert alert-danger">
-                    {errorMessage}
-                </div>
+                    <div className="alert alert-danger">
+                        {errorMessage}
+                    </div>
                 }
 
                 <div className="card">
@@ -52,8 +55,8 @@ const ProfilePage = () => {
                             <div className="col-6">
                                 <h3>All Purchased Items</h3>
                             </div>
-                            <div className="col-6 text-end">
-                                Current role is <strong>{currentUser?.role} </strong>
+                            <div className="col-6 text-end ">
+                                <p style={{ display: 'inline', padding: '2%' }}> Current role is <strong>{currentUser?.role} </strong></p>
                                 <button className="btn btn-primary" onClick={() => changeRole()}>
                                     Change Role
                                 </button>
@@ -65,23 +68,23 @@ const ProfilePage = () => {
                         <table className="table table-striped">
 
                             <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Date</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Date</th>
+                                </tr>
                             </thead>
                             <tbody>
 
-                            {purchaseList.map((item, ind) =>
-                                <tr key={item.id}>
-                                    <th scope="row">{ind + 1}</th>
-                                    <td>{item.title}</td>
-                                    <td>{`$ ${item.price}`}</td>
-                                    <td>{new Date(item.purchaseTime).toLocaleDateString()}</td>
-                                </tr>
-                            )}
+                                {purchaseList.map((item, ind) =>
+                                    <tr key={item.id}>
+                                        <th scope="row">{ind + 1}</th>
+                                        <td>{item.title}</td>
+                                        <td>{`$ ${item.price}`}</td>
+                                        <td>{new Date(item.purchaseTime).toLocaleDateString()}</td>
+                                    </tr>
+                                )}
 
 
                             </tbody>
@@ -95,4 +98,4 @@ const ProfilePage = () => {
     );
 };
 
-export {ProfilePage};
+export { ProfilePage };

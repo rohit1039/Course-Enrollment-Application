@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCurrentUser } from '../store/actions/user';
 import { Role } from '../models/role';
+import { toast } from 'react-toastify';
 
 const NavBar = () => {
 
@@ -12,8 +13,9 @@ const NavBar = () => {
     const navigate = useNavigate();
 
     const logout = () => {
-      dispatch(clearCurrentUser());
-      navigate('/login');
+        // clearing currentUser
+        dispatch(clearCurrentUser());
+        navigate('/login');
     };
 
     return (
@@ -25,51 +27,56 @@ const NavBar = () => {
 
             <div className="navbar-nav me-auto">
                 {currentUser?.role === Role.ADMIN &&
-                <li className="nav-item">
-                    <NavLink to="/admin" className="nav-link">
-                        Admin
-                    </NavLink>
-                </li>
+                    <li className="nav-item">
+                        <NavLink to="/admin" className="nav-link">
+                            Admin
+                        </NavLink>
+                    </li>
                 }
                 <li className="nav-item">
-                    <NavLink to="/home" className="nav-link">
+                    <NavLink to="/home" className="nav-link" onClick={() => {
+                        currentUser?.courses &&
+                        toast.info(<i>Courses loaded successfully</i>, {
+                            position: "bottom-right"
+                        })
+                    }}>
                         Home
                     </NavLink>
                 </li>
             </div>
 
             {!currentUser &&
-            <div className="navbar-nav ms-auto">
-                <li className="nav-item">
-                    <NavLink to="/register" className="nav-link">
-                        Sign Up
-                    </NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink to="/login" className="nav-link">
-                        Sign In
-                    </NavLink>
-                </li>
-            </div>
+                <div className="navbar-nav ms-auto">
+                    <li className="nav-item">
+                        <NavLink to="/register" className="nav-link">
+                            Sign Up
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to="/login" className="nav-link">
+                            Sign In
+                        </NavLink>
+                    </li>
+                </div>
             }
 
             {currentUser &&
-            <div className="navbar-nav ms-auto">
-                <li className="nav-item">
-                    <NavLink to="/profile" className="nav-link">
-                        {currentUser.fullname}
-                    </NavLink>
-                </li>
-                <li className="nav-item">
-                    <a href="#" className="nav-link" onClick={() => logout()}>
-                        Sign Out
-                    </a>
-                </li>
-            </div>
+                <div className="navbar-nav ms-auto">
+                    <li className="nav-item">
+                        <NavLink to="/profile" className="nav-link">
+                            Profile
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <a href="/login" className="nav-link" onClick={() => logout()}>
+                            Sign Out
+                        </a>
+                    </li>
+                </div>
             }
 
         </nav>
     );
 };
 
-export {NavBar};
+export { NavBar };
