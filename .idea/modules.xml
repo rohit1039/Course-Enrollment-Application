@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Course Enrollment Application.iml" filepath="$PROJECT_DIR$/.idea/Course Enrollment Application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/course-enrollment/microservice-1-course/microservice-1-course.iml" filepath="$PROJECT_DIR$/course-enrollment/microservice-1-course/microservice-1-course.iml" />
+      <module fileurl="file://$PROJECT_DIR$/course-enrollment/microservice-2-purchase/microservice-2-purchase.iml" filepath="$PROJECT_DIR$/course-enrollment/microservice-2-purchase/microservice-2-purchase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/course-enrollment/microservice-3-api-gateway/microservice-3-api-gateway.iml" filepath="$PROJECT_DIR$/course-enrollment/microservice-3-api-gateway/microservice-3-api-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/course-enrollment/microservice-4-eureka/microservice-4-eureka.iml" filepath="$PROJECT_DIR$/course-enrollment/microservice-4-eureka/microservice-4-eureka.iml" />
+    </modules>
+  </component>
+</project>

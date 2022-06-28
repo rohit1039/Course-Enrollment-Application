@@ -57,7 +57,7 @@ const LoginPage = () => {
       setLoading(true);
 
         AuthenticationService.login(user).then(response => {
-            toast.success(<i>Login success</i>, {
+            toast.success(<i>Login success!</i>, {
                 position:"bottom-left"
             });
           //set user in session.

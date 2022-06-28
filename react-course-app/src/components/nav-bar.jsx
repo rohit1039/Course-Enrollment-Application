@@ -35,7 +35,7 @@ const NavBar = () => {
                 }
                 <li className="nav-item">
                     <NavLink to="/home" className="nav-link" onClick={() => {
-                        currentUser?.courses &&
+                        currentUser?.courseList &&
                         toast.info(<i>Courses loaded successfully</i>, {
                             position: "bottom-right"
                         })

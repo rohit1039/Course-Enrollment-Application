@@ -49,7 +49,7 @@ const HomePage = () => {
             <div className="container">
                 {errorMessage ?
                     <Alert className="alert alert-danger">
-                        <FontAwesomeIcon icon={faExclamationTriangle} />
+                        <FontAwesomeIcon icon={faExclamationTriangle} style={{paddingRight:'2px'}} />
                         {errorMessage}
                     </Alert> : null
                 }

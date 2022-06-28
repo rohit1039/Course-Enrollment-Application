@@ -37,6 +37,7 @@ const AdminPage = () => {
         deleteComponent.current?.showDeleteModal();
     };
 
+
     const saveCourseWatcher = (course) => {
         let itemIndex = courseList.findIndex(item => item.id === course.id);
 
@@ -48,9 +49,10 @@ const AdminPage = () => {
                 return item;
             });
             setCourseList(newList);
+
         } else {
             const newList = courseList.concat(course);
-            setCourseList(newList);
+            setCourseList(newList.filter(x => x.id !== selectedCourse.id));
             window.location.reload();
         }
     };
@@ -69,13 +71,12 @@ const AdminPage = () => {
             <div>
                 <div className="container">
                     <div className="pt-5">
-
-                        {errorMessage ?
+                        {
+                            errorMessage ?
                             <Alert className="alert alert-danger">
-                                <FontAwesomeIcon icon={faExclamationTriangle} />
+                                <FontAwesomeIcon icon={faExclamationTriangle} style={{paddingRight:'2px'}}/>
                                 {errorMessage}
                             </Alert> : null
-
                         }
                     </div>
 

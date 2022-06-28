@@ -1,7 +1,6 @@
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 
-
 const CourseDelete = forwardRef((props, ref) => {
 
     const [show, setShow] = useState(false);
