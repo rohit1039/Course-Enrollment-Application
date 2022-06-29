@@ -1,9 +1,7 @@
 Course Enrollment Application
 ================================
 
-# Course Service
-
-### Endpoints
+# Course Service Endpoints
 
 #### Save Course
 
